@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
+import { collection, addDoc } from 'firebase/firestore';
+import { db} from './fireConfig';
 
 function VisitForm() {
   const [household, setHousehold] = useState('');
   const [date, setDate] = useState('');
   const [notes, setNotes] = useState('');
   const [followUp, setFollowUp] = useState(false);
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     // Later: Save to Firestore
+    try {
+        await addDoc(collection(db, 'visits'), {
+            household,
+            date,
+            notes,
+            followUp,
+            timesstamp: new Date()
+        });
+        setMessage ('Visit saved successfully.');
+        setHousehold('');
+        setDate('');
+        setNotes('');
+        setFollowUp(false);
+    }catch (error) {
+        setMessage('Error saving visit:' + error.message);
+    }
     console.log({ household, date, notes, followUp });
   };
 
