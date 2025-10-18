@@ -1,44 +1,65 @@
-import React from 'react';
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import app from './firebaseConfig';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
+import Dashboard from './Dashboard';
+
+const auth = getAuth(app);
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleLogin = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      setMessage('🌸 Welcome, dear sister. You are now signed in.');
+      navigate('/dashboard');
+    } catch (error) {
+      setMessage('⚠️ Login failed: ' + error.message);
+    }
+  };
 
   return (
-    <main style={{padding: '2rem', fontFamily: 'sans-serif', lineHeight: '1.6'}}>h
-    <h1>Ministering Companion</h1>
-    <p>Welcome, dear sisters. This sacred tool is here to support your service, uplift your heart, and unify your ward family.</p>
-    <ul>
-        <li>Secure login for ministering sisters</li>
-        <li>Visit logging and spiritual notes</li>
-        <li>Reminder schedule</li>
-        <li>Resource sharing and  encouragement</li>
-    </ul>
-      <div>
-        <a href="https://vite.dev" target="_blank">
+    <main className="main">
+      <div className="logo-container">
+        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
+        <a href="https://react.dev" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+
+      <h1 style={{ marginBottom: '1rem', color: '#333', fontSize: '2rem', fontWeight: '600' }}>
+        Ministering Companion
+      </h1>
+
+      <p className="spiritual-message">
+        Please sign in to access your sacred tools for ministering, encouragement, and spiritual notes.
       </p>
-    </>
-  )
+
+      <div className="login-form">
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <button onClick={handleLogin}>Sign In</button>
+        <p>{message}</p>
+      </div>
+    </main>
+  );
 }
 
-export default App
+export default App;
