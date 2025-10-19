@@ -1,14 +1,7 @@
 import React from 'react';
 import VisitForm from './VisitForm';
-
-function Dashboard() {
-  return (
-    <div>
-      <h2>🌸 Welcome to Your Ministering Dashboard</h2>
-      <VisitForm />
-    </div>
-  );
-}
+import VisitHistory from './VisitHistory';
+import MessageLibrary from './MessageLibrary';
 
 function Dashboard() {
   return (
@@ -19,6 +12,11 @@ function Dashboard() {
       <p style={{ marginBottom: '1rem', fontStyle: 'italic', color: '#555' }}>
         Here you’ll find your assignments, visit history, and uplifting messages.
       </p>
+      
+       {/* Placeholder Section */}
+       <VisitForm/>
+       <VisitHistory/>
+       <MessageLibrary/>
 
       {/* Placeholder sections */}
       <section style={{ marginTop: '2rem' }}>

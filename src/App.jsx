@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import app from './firebaseConfig';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import reactLogo from './assets/react.svg';
@@ -12,6 +14,7 @@ function App() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {

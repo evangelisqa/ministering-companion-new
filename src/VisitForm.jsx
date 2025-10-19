@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
-import { db} from './fireConfig';
+import { db} from './firebaseConfig';
 
 function VisitForm() {
   const [household, setHousehold] = useState('');
